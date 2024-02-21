@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Rydde",
+            "database": "${workspaceFolder:RyddeApp}/RyddeAppDatabase.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "RyddeApp",
+            "database": "${workspaceFolder:RyddeApp}/RyddeAppDatabase.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
