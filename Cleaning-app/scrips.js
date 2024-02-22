@@ -43,6 +43,7 @@ function signUp() {
 
 // Array of tasks
 let taskArray = []
+let pendingTaskArray = []
 
 // Appends the array of tasks to the task list
 function taskList() {
@@ -58,12 +59,16 @@ function taskList() {
 
 /* adds points to the global points variable, which is used to determine your
 rank on the leaderboard of your family */
+
 function completeTask(amountOfPoints, task) {
+    
+    pendingTaskArray.push(task)
+    taskArray.pop(task)
+    document.getElementById('taskConDiv').appendChild(task)
 
     points += parseInt(amountOfPoints)
-    task.style.backgroundColor = "#388697"
-    task.style.color = "#ffffff"
     console.log(points)
+    
 };
 
 
@@ -82,7 +87,6 @@ function add() {
 
     task.addEventListener('click', function() {
         completeTask(taskValue, task)
-        taskValue = 0
     });
 
     if (!taskArray.includes(task)) {
