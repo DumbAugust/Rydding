@@ -7,11 +7,9 @@ const publicPath = path.join(__dirname, '../public')
 const db = sq('databaseTest.db', {verbose: console.log})
 const app = express()
 
-const sqlProfile = db.prepare("select * from profile")
-const sqlProfileRows = sqlProfile.all()
-for (const row of sqlProfileRows) {
-    console.log(row)
-}
+const sqlProfile = db.prepare("select ID from profile Where name = ? and password = ?")
+const sqlProfileRows = sqlProfile.get('Carl', 'fdjoihc')
+console.log(sqlProfileRows)
 
 app.use(express.static(publicPath))
 app.use(session({
