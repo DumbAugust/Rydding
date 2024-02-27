@@ -6,10 +6,16 @@ const publicPath = path.join(__dirname, '../public')
 const db = sq('database.db', {verbose: console.log})
 const app = express()
 
+const sqlProfile = db.prepare("select * from profile")
+const sqlProfileRows = sqlProfile.all()
+for (const row of sqlProfileRows) {
+    console.log(row)
+}
+
 app.use(express.static(publicPath))
 
 
-app.get('/about', (req, res) => {
+app.get('/', (req, res) => {
     res.send("Welcome to my application")
 })
 
