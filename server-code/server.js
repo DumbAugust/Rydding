@@ -1,9 +1,10 @@
 const express = require('express')
 const path = require('path')
 const sq = require('better-sqlite3')
+const session = require('session')
 
 const publicPath = path.join(__dirname, '../public')
-const db = sq('database.db', {verbose: console.log})
+const db = sq('databaseTest.db', {verbose: console.log})
 const app = express()
 
 const sqlProfile = db.prepare("select * from profile")
@@ -13,12 +14,16 @@ for (const row of sqlProfileRows) {
 }
 
 app.use(express.static(publicPath))
-
+app.use(session({
+    secret: 'still a secret',
+    resave: false,
+    saveUninitialized: false,
+}));
 
 app.get('/', (req, res) => {
-    res.send("Welcome to my application")
-})
+    res.redirect("/main.html")
+});
 
 app.listen(3000, () => {
     console.log('server is up on port 3000')
-})
+});
