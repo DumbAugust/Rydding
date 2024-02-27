@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const sq = require('better-sqlite3')
-const session = require('session')
+const session = require('express-session')
 
 const publicPath = path.join(__dirname, '../public')
 const db = sq('databaseTest.db', {verbose: console.log})
