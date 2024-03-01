@@ -7,18 +7,18 @@ const publicPath = path.join(__dirname, '../public')
 const db = sq('databaseTest.db', {verbose: console.log})
 const app = express()
 
-const sqlProfile = db.prepare("select * from profile Where name = ? and password = ?")
-const sqlProfileRows = sqlProfile.get('Carl', 'fdjoihc')
-console.log(sqlProfileRows)
-const sqlFamily = db.prepare("select * from family where ID = ?").get(1)
-console.log(sqlFamily)
-
 // global data variables
 data = []
 
-function gatherData() {
-
+function gatherData(data, name, pass) {
+    data = []
+    data.push(db.prepare(`select * from profile where name = "${name}" and password = "${pass}"`))
+    data.push(db.prepare(`select * from family where ID = ${data[0].ID}`))
+    data.push(db.prepare(`select * from tasks where familyID = ${data[1].ID}`))
+    console.log(data)
 }
+
+gatherData(data, 'Carl', 'banan123' )
 
 app.use(express.static(publicPath))
 app.use(session({
