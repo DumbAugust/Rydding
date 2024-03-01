@@ -7,9 +7,18 @@ const publicPath = path.join(__dirname, '../public')
 const db = sq('databaseTest.db', {verbose: console.log})
 const app = express()
 
-const sqlProfile = db.prepare("select ID from profile Where name = ? and password = ?")
+const sqlProfile = db.prepare("select * from profile Where name = ? and password = ?")
 const sqlProfileRows = sqlProfile.get('Carl', 'fdjoihc')
 console.log(sqlProfileRows)
+const sqlFamily = db.prepare("select * from family where ID = ?").get(1)
+console.log(sqlFamily)
+
+// global data variables
+data = []
+
+function gatherData() {
+
+}
 
 app.use(express.static(publicPath))
 app.use(session({

@@ -5,6 +5,12 @@
             "driver": "SQLite",
             "name": "Ryddeapp",
             "database": "${workspaceFolder:Rydding}/Cleaning-app/RyddeAppDatabase.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Rydding",
+            "database": "${workspaceFolder:Rydding}/databaseTest.db"
         }
     ]
 }
