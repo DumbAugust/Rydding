@@ -9,7 +9,7 @@ const app = express()
 
 // global data variables
 
-data = []
+let data = []
 
 
 // function which gathers data from the database
@@ -21,7 +21,10 @@ function gatherData(data, name, pass) {
     data.push(db.prepare("select * from profileFamily where familyID = ?").all(3))
     data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(3))
     console.log(data)
+    return data
 }
+
+gatherData(data, 'Carl', 'banan123' )
 
 
 // i dont really know what this is yet
@@ -41,7 +44,6 @@ app.get('/', (req, res) => {
 // get function som samler data og sender det til adressen til /data
 
 app.get('/data', (req, res) => {
-    gatherData(data, 'Carl', 'banan123' )
     res.send(data)
 })
 
