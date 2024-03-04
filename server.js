@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
  // create application/json parser
 const jsonParser = bodyParser.json()
  // create application/x-www-form-urlencoded parser
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
+const urlParser = bodyParser.urlencoded({ extended: false })
  
 
 const publicPath = path.join(__dirname, './public')
@@ -49,8 +49,8 @@ app.get('/data', (req, res) => {
     res.send(gatherData(data, 'Carl', 'banan123', 12345 ))
 })
 
-app.post('/login', jsonParser, (req, res) => {
-    console.log(req.body.name)
+app.post('/login', urlParser, (req, res) => {
+    console.log(req.body.name, req.body.password)
 })
 
 /*
