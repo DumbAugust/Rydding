@@ -51,6 +51,9 @@ app.get('/data', (req, res) => {
 
 app.post('/login', urlParser, (req, res) => {
     console.log(req.body.name, req.body.password)
+    if (req.body.name && req.body.password != undefined) {
+        res.redirect()
+    }
 })
 
 /*
