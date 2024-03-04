@@ -20,10 +20,11 @@
         <main>
 
             <section id="Login" class="origin">
-                <div class="login">
+                <div class="login" id="logInForm">
 
                     <h1>Login</h1>
                     
+                    <form id="loginForm" method="POST" action="/logIn">
                     <div class="login_input">
                         <input type="text" class="El" placeholder="Name" id="name"></input>
                     </div>
@@ -38,9 +39,28 @@
                     </div>
         
                     <div class="sign_or_log">
-                        <button class="logInButton anotherButt" onclick="logIn()">Log in</button>
-                        <button class="signInButton anotherButt" onclick="signUp()">Sign up</button>
+                        <button class="logInButton anotherButt">Log in</button>
                     </div>
+                    </form>
+
+                    <form id="signInForm" method="POST" action="/signIn">
+                        <div class="login_input">
+                            <input type="text" class="El" placeholder="Name" id="name" name="name"></input>
+                        </div>
+            
+                        <div class="login_input">
+                            <input type="email" class="El" placeholder="Email" id="email" name="email"></input>
+                        </div>
+            
+                        <div class="login_input">
+                            <input type="password" class="El" placeholder="Password" id="password" name="password">
+                            </input>
+                        </div>
+            
+                        <div class="sign_or_log">
+                            <button class="signInButton anotherButt">Sign up</button>
+                        </div>
+                        </form>
         
                 </div>
             </section>
