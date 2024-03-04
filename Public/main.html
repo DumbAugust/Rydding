@@ -24,26 +24,27 @@
 
                     <h1>Login</h1>
                     
-                    <form id="loginForm" method="POST" action="/logIn">
+                    <form id="loginForm" method="POST" action="/login">
                     <div class="login_input">
-                        <input type="text" class="El" placeholder="Name" id="name"></input>
+                        <label for="name"></label>
+                        <input type="text" class="El" placeholder="Name" id="name" name="name"></input>
                     </div>
         
                     <div class="login_input">
-                        <input type="email" class="El" placeholder="Email" id="email"></input>
+                        <input type="email" class="El" placeholder="Email" id="email" name="email"></input>
                     </div>
         
                     <div class="login_input">
-                        <input type="password" class="El" placeholder="Password" id="password">
+                        <input type="password" class="El" placeholder="Password" id="password" name="password">
                         </input>
                     </div>
         
                     <div class="sign_or_log">
-                        <button class="logInButton anotherButt">Log in</button>
+                        <button type="submit" class="logInButton anotherButt" name="login">Log in</button>
                     </div>
                     </form>
 
-                    <form id="signInForm" method="POST" action="/signIn">
+                    <form id="signInForm" method="POST" action="/signin">
                         <div class="login_input">
                             <input type="text" class="El" placeholder="Name" id="name" name="name"></input>
                         </div>
@@ -58,7 +59,7 @@
                         </div>
             
                         <div class="sign_or_log">
-                            <button class="signInButton anotherButt">Sign up</button>
+                            <button type="submit" class="signInButton anotherButt" name="signin">Sign up</button>
                         </div>
                         </form>
         

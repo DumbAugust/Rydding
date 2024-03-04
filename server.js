@@ -3,22 +3,28 @@ const path = require('path')
 const sq = require('better-sqlite3')
 const session = require('express-session')
 
-const publicPath = path.join(__dirname, '../public')
+const bodyParser = require('body-parser')
+ // create application/json parser
+const jsonParser = bodyParser.json()
+ // create application/x-www-form-urlencoded parser
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+ 
+
+const publicPath = path.join(__dirname, './public')
 const db = sq('databaseTest.db', {verbose: console.log})
 const app = express()
 
 // global data variables
-
+let data = []
 
 // function which gathers data from the database
 
 function gatherData(data, name, pass, family) {
-    let data = []
+    data = []
     data.push(db.prepare(`select * from profile where name = ? and password = ?`).get(name, pass))
     data.push(db.prepare(`select * from family where codes = ?`).get(family))
     data.push(db.prepare("select * from profileFamily where familyID = ?").all(data[1].ID))
     data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(data[1].ID))
-    console.log(data)
     return data
 }
 
@@ -41,6 +47,10 @@ app.get('/', (req, res) => {
 
 app.get('/data', (req, res) => {
     res.send(gatherData(data, 'Carl', 'banan123', 12345 ))
+})
+
+app.post('/login', jsonParser, (req, res) => {
+    console.log(req.body.name)
 })
 
 /*
