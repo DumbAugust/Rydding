@@ -4,8 +4,10 @@ const sq = require('better-sqlite3')
 const session = require('express-session')
 
 const bodyParser = require('body-parser')
+
  // create application/json parser
 const jsonParser = bodyParser.json()
+
  // create application/x-www-form-urlencoded parser
 const urlParser = bodyParser.urlencoded({ extended: false })
  
@@ -65,11 +67,24 @@ app.post('/login', urlParser, (req, res) => {
     }
 })
 
+// app.post for sing in feature
 app.post('/signin', urlParser, (req, res) => {
-    
+
 })
 
+
+//app.post for family log in feature
 app.post('/family', urlParser, (req, res) => {
+
+})
+
+// app.post for familycreate feature
+app.post('/familycreate', urlParser, (req, res) => {
+
+})
+
+// app.post for task creation feature
+app.post('/taskcreate', urlParser, (req, res) => {
 
 })
 
