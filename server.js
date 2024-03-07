@@ -17,6 +17,10 @@ const app = express()
 // global data variables
 let data = []
 
+let username;
+let password;
+let familycode;
+
 // function which gathers data from the database
 
 function gatherData(data, name, pass, family) {
@@ -40,21 +44,36 @@ app.use(session({
 // get funksjon som sender deg til html siden når nettsiden åpnes
 
 app.get('/', (req, res) => {
-    res.redirect("/main.html")
+    res.redirect("/login.html")
 });
 
 // get function som samler data og sender det til adressen til /data
 
 app.get('/data', (req, res) => {
-    res.send(gatherData(data, 'Carl', 'banan123', 12345 ))
+    res.send(gatherData(data, username, password, familycode ))
 })
 
 app.post('/login', urlParser, (req, res) => {
-    console.log(req.body.name, req.body.password)
+
     if (req.body.name && req.body.password != undefined) {
-        res.redirect()
+        username = req.body.name
+        password = req.body.password
+        res.redirect("/main.html")
+        console.log(username, password)
+    } else {
+        console.log("need username and password")
     }
 })
+
+app.post('/signin', urlParser, (req, res) => {
+    
+})
+
+app.post('/family', urlParser, (req, res) => {
+
+})
+
+
 
 /*
 

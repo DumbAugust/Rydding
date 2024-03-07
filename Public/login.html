@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/main.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito&display=swap" rel="stylesheet">
+    <title>Cleaning</title>
+    <script src="./js/scrips.js"></script>
+</head>
+<body class="App">
+        <main>
+
+            <section id="Login" class="origin">
+                <div class="login" id="logInForm">
+
+                    <h1>Login</h1>
+                    
+                    <form id="loginForm" method="POST" action="/login">
+                    <div class="login_input">
+                        <label for="name"></label>
+                        <input type="text" class="El" placeholder="Name" id="name" name="name"></input>
+                    </div>
+        
+                    <div class="login_input">
+                        <input type="password" class="El" placeholder="Password" id="password" name="password">
+                        </input>
+                    </div>
+        
+                    <div class="sign_or_log">
+                        <button type="submit" class="logInButton anotherButt" name="login">Log in</button>
+                    </div>
+                    </form>
+
+                    <form id="signInForm" method="POST" action="/signin">
+                        <div class="login_input">
+                            <input type="text" class="El" placeholder="Name" id="name" name="name"></input>
+                        </div>            
+            
+                        <div class="login_input">
+                            <input type="password" class="El" placeholder="Password" id="password" name="password">
+                            </input>
+                        </div>
+            
+                        <div class="sign_or_log">
+                            <button type="submit" class="signInButton anotherButt" name="signin">Sign up</button>
+                        </div>
+                        </form>
+        
+                </div>
+            </section>
+
+            <section class="bottom">
+            </section>
+
+        </main>
+</body>
+</html>
