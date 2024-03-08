@@ -27,7 +27,6 @@ let familyID
 
 // function which gathers data from the database
 
-/*
 function gatherData(data, name, pass, family) {
     data = []
     data.push(db.prepare(`select * from profile where name = ? and password = ?`).get(name, pass))
@@ -36,7 +35,6 @@ function gatherData(data, name, pass, family) {
     data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(data[1].ID))
     return data
 }
-*/
 
 // i dont really know what this is yet
 app.use(express.static(publicPath))
@@ -111,11 +109,19 @@ app.post('/familyadd', urlParser, (req, res) => {
 
     let result = db.prepare("select * from family where codes = ?").get(code)
 
+/* Checks if there is a family with the given code,
+then checks if the person is not already in the family.
+If both conditions are true. then adds user to the family */
+
     if (result != undefined) {
-        familycode = code
-        familyID = result.ID
-        console.log(familyID)
-        result = db.prepare("insert into profileFamily (familyID, profileID, points) values (?, ?, ?)").run(familyID, profileID, 0)
+        if (db.prepare("select * from profileFamily where profileID = ?").get(profileID) == undefined) {
+            familycode = code
+            familyID = result.ID
+            console.log(familyID)
+            result = db.prepare("insert into profileFamily (familyID, profileID, points) values (?, ?, ?)").run(familyID, profileID, 0)
+        } else {
+            console.log("already in family")
+        }
     } else {
         console.log("couldn't find family")
     }
