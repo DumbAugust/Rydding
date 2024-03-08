@@ -1,11 +1,11 @@
-function Person(name, family, isParent, points, email) {
+/* function Person(name, family, isParent, points, email) {
     this.name = name;
     this.familyCode = family
     this.isParent = isParent 
     this.points = points;
     this.email = email;
 }
-
+*/
 function makeARankList(num) {
     for (i = num; i > 0; i--) {
         
@@ -16,12 +16,13 @@ function makeARankList(num) {
 
 let personName;
 let family;
-let isParent = true;
-let points = 0;
-let email;
+// let isParent = true;
+// let points = 0;
+// let email;
 
 // functions for the login section
 
+/*
 function logIn() {
 
     document.getElementById('Login').style.display = 'none';
@@ -37,7 +38,7 @@ function signUp() {
     personName = document.getElementById("name").value
     email = document.getElementById("email").value
 }
-
+*/
 
 // This part is for the task section
 
@@ -76,6 +77,8 @@ function completeTask(amountOfPoints, task) {
 value input field, then it creates a button which gets a even listener with the
 completeTask function in it
 */
+
+/*
 function add() {
 
     let taskValue = document.getElementById('taskValue').value
@@ -95,15 +98,16 @@ function add() {
     }
 
 }
-
+*/
 
 
 
 // This part is for the family number section
-
+/*
 let familyCode = 0;
 let you;
-
+*/
+/*
 function familyLogIn() {
 
     familyCode = document.getElementById('familyNum').value
@@ -138,4 +142,24 @@ function createProfile() {
     } else {
         document.getElementById('profileParent').innerHTML = "Guardian: no"
     }
+}
+
+*/
+
+//Mal for async function som skal oppdateres
+
+async function updateData() {
+    try {
+        let response =  await fetch('/data');
+        let data = await response.json();
+        console.log(data);
+    } catch (err) {
+        console.log("This went wrong: " + err)
+    }
+
+}
+
+// Here i will run all the code
+function main() {
+
 }

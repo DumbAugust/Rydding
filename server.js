@@ -25,15 +25,16 @@ let familycode;
 
 // function which gathers data from the database
 
+/*
 function gatherData(data, name, pass, family) {
     data = []
     data.push(db.prepare(`select * from profile where name = ? and password = ?`).get(name, pass))
-    data.push(db.prepare(`select * from family where codes = ?`).get(family))
+    data.push(db.prepare(`select * from family where profileID = ?`).get(family))
     data.push(db.prepare("select * from profileFamily where familyID = ?").all(data[1].ID))
     data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(data[1].ID))
     return data
 }
-
+*/
 
 // i dont really know what this is yet
 app.use(express.static(publicPath))
@@ -52,7 +53,11 @@ app.get('/', (req, res) => {
 // get function som samler data og sender det til adressen til /data
 
 app.get('/data', (req, res) => {
-    res.send(gatherData(data, username, password, familycode ))
+    try {
+        res.send(gatherData(data, username, password, familycode ))
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 app.post('/login', urlParser, (req, res) => {
@@ -73,9 +78,15 @@ app.post('/signin', urlParser, (req, res) => {
 })
 
 
-//app.post for family log in feature
-app.post('/family', urlParser, (req, res) => {
-
+//checks if user is in any families
+app.get('/family', urlParser, (req, res) => {
+    try {
+        let id = db.prepare('select ID from profile where name = ? and password = ?').get(username, password)
+        let data = db.prepare("select * from familyProfile where profileID = ?").all(id)
+        res.send(data)
+    } catch (err) {
+        console.log("no family")
+    }
 })
 
 // app.post for familycreate feature
@@ -87,21 +98,6 @@ app.post('/familycreate', urlParser, (req, res) => {
 app.post('/taskcreate', urlParser, (req, res) => {
 
 })
-
-
-
-/*
-
-Mal for async function som skal oppdateres
-
-async function updateData() {
-    let response =  await fetch('/data');
-    let data = await response.json();
-
-    noe kode som oppdaterer siden
-}
-
-*/
 
 app.listen(3000, () => {
     console.log('server is up on port 3000')
