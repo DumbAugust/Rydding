@@ -129,7 +129,18 @@ If both conditions are true. then adds user to the family */
 })
 
 app.post('/familycreate', urlParser, (req, res) => {
+    let code = req.body.code
 
+    let result = db.prepare("select * from family where codes = ?").get(code)
+
+    if (result == undefined) {
+        result = db.prepare("insert into family (codes) values (?)").run(code)
+        familycode = code
+        familyID = result.lastInsertRowid
+
+        result = db.prepare("insert into profileFamily (profileID, familyID, points) values(?,?,?)").run(profileID, familyID, 0)
+        console.log(result)
+    }
 })
 
 // app.post for task creation feature
