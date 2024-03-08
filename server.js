@@ -13,7 +13,7 @@ const urlParser = bodyParser.urlencoded({ extended: false })
  
 
 const publicPath = path.join(__dirname, './public')
-const db = sq('databaseTest.db', {verbose: console.log})
+const db = sq('testdatabase.db', {verbose: console.log})
 const app = express()
 
 // global data variables
