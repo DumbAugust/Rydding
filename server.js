@@ -23,6 +23,7 @@ let username;
 let password;
 let profileID;
 let familycode;
+let familyID
 
 // function which gathers data from the database
 
@@ -69,7 +70,7 @@ app.post('/login', urlParser, (req, res) => {
 
     if (sql != undefined) {
         profileID = sql.ID
-        res.redirect("/main.html")
+        res.redirect("/main.html#Family")
         console.log(username, password, profileID)
     } else {
         console.log("username and password is incorrect")
@@ -98,16 +99,29 @@ app.post('/signin', urlParser, (req, res) => {
 
 //checks if user is in any families
 app.get('/family', urlParser, (req, res) => {
-    try {
-        let id = db.prepare('select ID from profile where name = ? and password = ?').get(username, password)
-        let data = db.prepare("select * from familyProfile where profileID = ?").all(id)
-        res.send(data)
-    } catch (err) {
-        console.log("no family")
-    }
+    let data = db.prepare("select * from profileFamily where profileID = ?").all(profileID)
+    console.log(data)
+    res.send(data)
 })
 
 // app.post for familycreate feature
+
+app.post('/familyadd', urlParser, (req, res) => {
+    let code = req.body.code
+
+    let result = db.prepare("select * from family where codes = ?").get(code)
+
+    if (result != undefined) {
+        familycode = code
+        familyID = result.ID
+        console.log(familyID)
+        result = db.prepare("insert into profileFamily (familyID, profileID, points) values (?, ?, ?)").run(familyID, profileID, 0)
+    } else {
+        console.log("couldn't find family")
+    }
+
+})
+
 app.post('/familycreate', urlParser, (req, res) => {
 
 })
