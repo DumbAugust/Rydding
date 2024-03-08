@@ -11,6 +11,12 @@
             "driver": "SQLite",
             "name": "Rydding",
             "database": "${workspaceFolder:Rydding}/databaseTest.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "testdatabase",
+            "database": "${workspaceFolder:Rydding}/testdatabase.db"
         }
     ]
 }

@@ -79,6 +79,20 @@ app.post('/login', urlParser, (req, res) => {
 // app.post for sing in feature
 app.post('/signin', urlParser, (req, res) => {
 
+    username = req.body.name
+    password = req.body.password
+
+    let result = db.prepare('SELECT ID from profile where name = ? and password = ?').get(username, password)
+
+    if (result == undefined) {
+        result = db.prepare('INSERT INTO profile (name, password) VALUES (?, ?)').run(username, password)
+        console.log(result)
+        profileID = result.lastInsertRowid
+        res.redirect("/main.html")
+        console.log(username, password, profileID)
+    } else {
+        console.log('user already exists')
+    }
 })
 
 
