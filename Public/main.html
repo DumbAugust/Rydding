@@ -20,18 +20,39 @@
 
             <section id="Family">
                 <div class="login">
-                    <h1>Family Code</h1>
-                    <div>
-                        <input class="El" placeholder="Family number" id="familyNum">
-                        <p></p>
-                        <button class="anotherButt" onclick="familyLogIn()">Log in</button>
+                    <h1>Families</h1>
+                    <div id="familyContainer">
+                        
                     </div>
                     <div class="margin">
-                        <p>Dont have a Family? Click me</p>
-                        <p>|</p>
-                        <p>|</p>
-                        <p>V</p>
-                        <button class="anotherButt" onclick="createFamily()">Lol orphan</button>
+                        <h1>Add family</h1>
+                        <form method="POST" action="/familyadd">
+
+                            <div class="login_input">
+                                <label for="code"></label>
+                                <input type="number" class="El" placeholder="code" id="code" name="code"></input>
+                            </div>
+                
+                            <div class="sign_or_log">
+                                <button type="submit" class="logInButton anotherButt" name="familyadd">Log in</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="margin">
+                        <h1>Create family</h1>
+                        <form method="POST" action="/familycreate">
+
+                            <div class="login_input">
+                                <label for="code"></label>
+                                <input type="number" class="El" placeholder="code" id="code" name="code"></input>
+                            </div>
+                
+                            <div class="sign_or_log">
+                                <button type="submit" class="logInButton anotherButt" name="familycreate">Log in</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </section>

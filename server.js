@@ -21,6 +21,7 @@ let data = []
 
 let username;
 let password;
+let profileID;
 let familycode;
 
 // function which gathers data from the database
@@ -62,13 +63,16 @@ app.get('/data', (req, res) => {
 
 app.post('/login', urlParser, (req, res) => {
 
-    if (req.body.name && req.body.password != undefined) {
-        username = req.body.name
-        password = req.body.password
+    username = req.body.name
+    password = req.body.password
+    let sql = db.prepare('SELECT ID from profile where name = ? and password = ?').get(username, password)
+
+    if (sql != undefined) {
+        profileID = sql.ID
         res.redirect("/main.html")
-        console.log(username, password)
+        console.log(username, password, profileID)
     } else {
-        console.log("need username and password")
+        console.log("username and password is incorrect")
     }
 })
 
