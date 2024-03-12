@@ -13,7 +13,7 @@ const urlParser = bodyParser.urlencoded({ extended: false })
  
 
 const publicPath = path.join(__dirname, './public')
-const db = sq('main.db', {verbose: console.log})
+const db = sq('testdatabase.db', {verbose: console.log})
 const app = express()
 
 // global data variables
@@ -73,6 +73,7 @@ app.post('/login', urlParser, (req, res) => {
     } else {
         console.log("username and password is incorrect")
     }
+
 })
 
 // app.post for sing in feature
@@ -87,7 +88,7 @@ app.post('/signin', urlParser, (req, res) => {
         result = db.prepare('INSERT INTO profile (name, password) VALUES (?, ?)').run(username, password)
         console.log(result)
         profileID = result.lastInsertRowid
-        res.redirect("/main.html")
+        res.redirect("/main.html#Family")
         console.log(username, password, profileID)
     } else {
         console.log('user already exists')
@@ -141,6 +142,22 @@ app.post('/familycreate', urlParser, (req, res) => {
         result = db.prepare("insert into profileFamily (profileID, familyID, points) values(?,?,?)").run(profileID, familyID, 0)
         console.log(result)
     }
+})
+
+app.post('/taskcreate', urlParser, (req, res) => {
+
+    let task = req.body.task
+    let value = req.body.value
+
+    if (familyID != undefined) {
+
+    let sql = db.prepare("Insert into familyTask (familyID, task, value) values(?,?,?)").run(familyID, task, value)
+    console.log(sql)
+
+}
+
+app.post('/taskcomplete', urlParser, (req, res) => {
+    
 })
 
 // app.post for task creation feature
