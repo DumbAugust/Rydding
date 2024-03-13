@@ -30,8 +30,8 @@ let familyID
 function gatherData(data, name, pass, family) {
     data = []
     data.push(db.prepare(`select * from profile where name = ? and password = ?`).get(name, pass))
-    data.push(db.prepare(`select * from family where profileID = ?`).get(family))
-    data.push(db.prepare("select * from profileFamily where familyID = ?").all(data[1].ID))
+    data.push(db.prepare(`select * from family where codes = ?`).get(familycode))
+    data.push(db.prepare("select * from profileFamily where familyID = ? ORDER BY points DESC").all(data[1].ID))
     data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(data[1].ID))
     return data
 }
@@ -145,7 +145,7 @@ app.post('/familycreate', urlParser, (req, res) => {
 })
 
 app.post('/taskcreate', urlParser, (req, res) => {
-
+    
     let task = req.body.task
     let value = req.body.value
 
@@ -154,17 +154,17 @@ app.post('/taskcreate', urlParser, (req, res) => {
     let sql = db.prepare("Insert into familyTask (familyID, task, value) values(?,?,?)").run(familyID, task, value)
     console.log(sql)
 
-}
+    } else {
+        console.log('not connected to family')
+    }
+
+})
 
 app.post('/taskcomplete', urlParser, (req, res) => {
-    
-})
-
-// app.post for task creation feature
-app.post('/taskcreate', urlParser, (req, res) => {
 
 })
+
 
 app.listen(3000, () => {
     console.log('server is up on port 3000')
-});
+})

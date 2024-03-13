@@ -100,13 +100,14 @@ function makeRankTable(familie) {
                 </div>
                 <div class="parentAccess">
                 <section id="addTasks">
+                    <form action="/taskcreate" method="POST" >
                     <h1 class="margin">Add Tasks</h1>
-                    <input class="El" type="text" placeholder="task" id="addTask">
+                    <input class="El" type="text" placeholder="task" id="addTask" name="task">
                     <p></p>
-                    <input class="El" type="number" placeholder="value" id="taskValue">
+                    <input class="El" type="number" placeholder="value" id="taskValue" name="value">
                     <p></p>
-                    <button class="anotherButt" onclick="add()">Add</button>
-    
+                    <button class="anotherButt">Add</button>
+                    </form>
                 </section>
                 <section id="confirmTasks">
                     <h1>Task Comfirmation</h1>

@@ -161,5 +161,7 @@ async function updateData() {
 
 // Here i will run all the code
 function main() {
-
+    updateData();
 }
+
+main();
