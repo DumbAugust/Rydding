@@ -157,6 +157,8 @@ async function updateData() {
         console.log("This went wrong: " + err)
     }
 
+    setTimeout(updateData, 1000)
+
 }
 
 // Here i will run all the code
