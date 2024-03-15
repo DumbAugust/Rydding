@@ -16,9 +16,6 @@ const publicPath = path.join(__dirname, './public')
 const db = sq('testdatabase.db', {verbose: console.log})
 const app = express()
 
-// global data variables
-let data = []
-
 let username;
 let password;
 let profileID;
@@ -27,28 +24,30 @@ let familyID
 
 // function which gathers data from the database
 
-function gatherData(data, name, pass, familyID) {
-    data = []
-    data.push(db.prepare(`select * from profile where name = ? and password = ?`).get(name, pass))
-    data.push(db.prepare(`select * from family where ID = ?`).get(familyID))
-    data.push(db.prepare("select * from profileFamily where familyID = ? ORDER BY points DESC").all(data[1].ID))
-    data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(data[1].ID))
+function gatherData() {
+
+    let data = []
+
+
     return data
 }
 
-function getFamily() {
+function gatherFamily() {
 
-    let data = db.prepare('select familyID from profileFamily where profileID = ?').all(profileID)
+    let data = []
 
-    let family = data[0].familyID
+    let sql = db.prepare("select * from profileFamily where profileID = ?").all(profileID)
 
-    if (family == undefined) {
-        console.log("no family")
+    if (sql != undefined) {
+
+        data.push(sql)
+        console.log(data)
+        familyID = data[0].familyID
+        return data
+
     } else {
-        familyID = family
-        console.log(familyID)
+        console.log('no family')
     }
-    
 }
 
 // i dont really know what this is yet
@@ -72,6 +71,15 @@ app.get('/data', (req, res) => {
         res.send(gatherData(data, username, password, familyID))
     } catch (err) {
         console.log(err)
+    }
+})
+
+app.get('/families', (req, res) => {
+    try {
+        res.send(gatherFamily())
+    } catch (err) {
+        console.log(err)
+        return []
     }
 })
 

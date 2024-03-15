@@ -148,6 +148,21 @@ function createProfile() {
 
 //Mal for async function som skal oppdateres
 
+
+function familyCreate() {
+    try {
+        let response = fetch('/families');
+        let data = response.json();
+
+        for (let val in data) {
+            getElementById('familyContainer').innerHTML += `<div class="login_input">${data[val].familyID}</div>`
+            console.log('successfully created family')
+        }    
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function updateData() {
     try {
         let response =  await fetch('/data');
@@ -166,6 +181,7 @@ async function updateData() {
 
 // Here i will run all the code
 function main() {
+    familyCreate();
     updateData();
 }
 
