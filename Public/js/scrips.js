@@ -153,6 +153,9 @@ async function updateData() {
         let response =  await fetch('/data');
         let data = await response.json();
         console.log(data);
+
+        
+
     } catch (err) {
         console.log("This went wrong: " + err)
     }

@@ -27,13 +27,28 @@ let familyID
 
 // function which gathers data from the database
 
-function gatherData(data, name, pass, family) {
+function gatherData(data, name, pass, familyID) {
     data = []
     data.push(db.prepare(`select * from profile where name = ? and password = ?`).get(name, pass))
-    data.push(db.prepare(`select * from family where codes = ?`).get(familycode))
+    data.push(db.prepare(`select * from family where ID = ?`).get(familyID))
     data.push(db.prepare("select * from profileFamily where familyID = ? ORDER BY points DESC").all(data[1].ID))
     data.push(db.prepare(`select * from familyTasks where familyID = ?`).all(data[1].ID))
     return data
+}
+
+function getFamily() {
+
+    let data = db.prepare('select familyID from profileFamily where profileID = ?').all(profileID)
+
+    let family = data[0].familyID
+
+    if (family == undefined) {
+        console.log("no family")
+    } else {
+        familyID = family
+        console.log(familyID)
+    }
+    
 }
 
 // i dont really know what this is yet
@@ -54,7 +69,7 @@ app.get('/', (req, res) => {
 
 app.get('/data', (req, res) => {
     try {
-        res.send(gatherData(data, username, password, familycode ))
+        res.send(gatherData(data, username, password, familyID))
     } catch (err) {
         console.log(err)
     }
@@ -69,6 +84,7 @@ app.post('/login', urlParser, (req, res) => {
     if (sql != undefined) {
         profileID = sql.ID
         res.redirect("/main.html#Family")
+        getFamily()
         console.log(username, password, profileID)
     } else {
         console.log("username and password is incorrect")
@@ -151,7 +167,7 @@ app.post('/taskcreate', urlParser, (req, res) => {
 
     if (familyID != undefined) {
 
-    let sql = db.prepare("Insert into familyTask (familyID, task, value) values(?,?,?)").run(familyID, task, value)
+    let sql = db.prepare("Insert into familyTasks (familyID, task, value) values(?,?,?)").run(familyID, task, value)
     console.log(sql)
 
     } else {
