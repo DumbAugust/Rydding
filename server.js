@@ -5,9 +5,6 @@ const session = require('express-session')
 
 const bodyParser = require('body-parser')
 
- // create application/json parser
-const jsonParser = bodyParser.json()
-
  // create application/x-www-form-urlencoded parser
 const urlParser = bodyParser.urlencoded({ extended: false })
  
@@ -19,8 +16,9 @@ const app = express()
 let username;
 let password;
 let profileID;
-let familycode;
-let familyID
+let familyID;
+let familycode
+let pfID;
 
 // function which gathers data from the database
 
@@ -28,16 +26,17 @@ function gatherData() {
 
     let data = []
 
-    data.push(db.prepare("SELECT * FROM profileFamily where profileID = ?").all(profileID))
+    data.push(db.prepare("SELECT * FROM profileFamily JOIN family on profileFamily.familyID = family.ID where profileID = ?").all(profileID))
 
     if (data[0][0].familyID == undefined) {
         
     } else {
 
+        pfID = data[0][0].ID
         familyID = data[0][0].familyID
 
         data.push(db.prepare("SELECT * from familyTasks WHERE familyID = ?").all(familyID));
-        data.push(db.prepare("select * from profileFamily where familyID = ? order by points DESC").all(familyID));
+        data.push(db.prepare("select * from profileFamily JOIN profile ON profileFamily.profileID = profile.ID where familyID = ? order by points DESC").all(familyID));
 
     }
 
@@ -52,6 +51,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
+ // create application/json parser
+ app.use(bodyParser.json())
 
 // get funksjon som sender deg til html siden når nettsiden åpnes
 
@@ -163,7 +165,13 @@ app.post('/taskcreate', urlParser, (req, res) => {
 
 app.post('/taskcomplete', urlParser, (req, res) => {
 
-})
+    let obj = req.body
+
+    for (let i in obj) {
+        let sql = db.prepare('UPDATE profileFamily SET points = points + ? WHERE profileID = ?').run(obj[i], profileID)
+    } 
+
+}) 
 
 
 app.listen(3000, () => {
