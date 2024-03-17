@@ -47,7 +47,7 @@ let taskArray = []
 let pendingTaskArray = []
 
 // Appends the array of tasks to the task list
-function taskList() {
+/*function taskList() {
 
     document.getElementById('taskDiv').innerHTML = "<label></label"
 
@@ -55,7 +55,7 @@ function taskList() {
         document.getElementById('taskDiv').appendChild(taskArray[val])
         console.log(document.getElementById('taskDiv')[0])
     }
-}
+}*/
 
 
 /* adds points to the global points variable, which is used to determine your
@@ -149,25 +149,38 @@ function createProfile() {
 //Mal for async function som skal oppdateres
 
 
-function familyCreate() {
-    try {
-        let response = fetch('/families');
-        let data = response.json();
+function familyCreate(arr) {
 
-        for (let val in data) {
-            getElementById('familyContainer').innerHTML += `<div class="login_input">${data[val].familyID}</div>`
-            console.log('successfully created family')
-        }    
-    } catch (e) {
-        console.log(e);
-    }
+    document.getElementById('familyContainer').innerHTML = "<div></div>"
+    
+    for (let i = 0; i < arr.length; i++) {
+        
+        console.log(arr[i])
+        document.getElementById('familyContainer').innerHTML += `<div class="El">${arr[i].profileID} points: ${arr[i].points}</div>`
+
+    }   
+}
+
+
+function taskCreate(arr) {
+
+    document.getElementById('taskContainer').innerHTML = "<div></div>"
+    
+    for (let i = 0; i < arr.length; i++) {
+        
+        document.getElementById('taskContainer').innerHTML += `<div class="El">${arr[i].task} value: ${arr[i].value}</div>`
+
+    }   
 }
 
 async function updateData() {
     try {
+
         let response =  await fetch('/data');
         let data = await response.json();
-        console.log(data);
+
+        familyCreate(data[2])
+        taskCreate(data[1])
 
         
 
@@ -181,7 +194,7 @@ async function updateData() {
 
 // Here i will run all the code
 function main() {
-    familyCreate();
+
     updateData();
 }
 

@@ -28,26 +28,21 @@ function gatherData() {
 
     let data = []
 
+    data.push(db.prepare("SELECT * FROM profileFamily where profileID = ?").all(profileID))
+
+    if (data[0][0].familyID == undefined) {
+        
+    } else {
+
+        familyID = data[0][0].familyID
+
+        data.push(db.prepare("SELECT * from familyTasks WHERE familyID = ?").all(familyID));
+        data.push(db.prepare("select * from profileFamily where familyID = ? order by points DESC").all(familyID));
+
+    }
 
     return data
-}
 
-function gatherFamily() {
-
-    let data = []
-
-    let sql = db.prepare("select * from profileFamily where profileID = ?").all(profileID)
-
-    if (sql != undefined) {
-
-        data.push(sql)
-        console.log(data)
-        familyID = data[0].familyID
-        return data
-
-    } else {
-        console.log('no family')
-    }
 }
 
 // i dont really know what this is yet
@@ -68,18 +63,9 @@ app.get('/', (req, res) => {
 
 app.get('/data', (req, res) => {
     try {
-        res.send(gatherData(data, username, password, familyID))
+        res.send(gatherData())
     } catch (err) {
         console.log(err)
-    }
-})
-
-app.get('/families', (req, res) => {
-    try {
-        res.send(gatherFamily())
-    } catch (err) {
-        console.log(err)
-        return []
     }
 })
 
@@ -92,7 +78,6 @@ app.post('/login', urlParser, (req, res) => {
     if (sql != undefined) {
         profileID = sql.ID
         res.redirect("/main.html#Family")
-        getFamily()
         console.log(username, password, profileID)
     } else {
         console.log("username and password is incorrect")
@@ -117,14 +102,6 @@ app.post('/signin', urlParser, (req, res) => {
     } else {
         console.log('user already exists')
     }
-})
-
-
-//checks if user is in any families
-app.get('/family', urlParser, (req, res) => {
-    let data = db.prepare("select * from profileFamily where profileID = ?").all(profileID)
-    console.log(data)
-    res.send(data)
 })
 
 // app.post for familycreate feature
